@@ -1,0 +1,46 @@
+﻿@model IEnumerable<MVC_Personel.Models.Department>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Departman Listesi</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Yeni Departman</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Departman Adı
+            </th>
+            <th>Personel Sayısı</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            byte say = 0;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                @foreach (var emp in ViewBag.empList)
+                {
+                    if (emp.DepartmentID == item.ID)
+                    {
+                        say++;
+                    }
+                }
+                <td>@say</td>
+                <td>
+                    @if (item.ID != 1)
+                    {
+                        <a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Sil</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

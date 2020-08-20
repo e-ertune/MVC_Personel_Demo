@@ -1,0 +1,52 @@
+﻿@model IEnumerable<MVC_Personel.Models.Position>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Pozisyon Listesi</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Yeni Pozisyon</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Pozisyon Adı
+            </th>
+            <th>
+                Yetkisi
+            </th>
+            <th>Personel Sayısı</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            byte say = 0;
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Authority)
+                </td>
+                @foreach (var emp in ViewBag.empList)
+                {
+                    if (emp.PositionID == item.ID)
+                    {
+                        say++;
+                    }
+                }
+                <td>@say</td>
+                <td>
+                    @if (item.ID != 5)
+                    {
+                        <a asp-action="Sil" asp-route-id="@item.ID" class="btn btn-danger">Sil</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
